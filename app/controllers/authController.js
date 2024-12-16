@@ -1,10 +1,11 @@
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 const { User } = require("../models/DataBaseModel");
 const baseResponse = require("../../response/BaseResponse");
 const { StatusCodes } = require("http-status-codes");
 const JwtTokenUtil = require("../../middleware/JwtTokenUtil");
 const mongoose = require("mongoose");
-const Joi = require('joi'); // Assuming Joi is used for validation
+const Joi = require("joi");
+const logger = require("../../utils/logger"); // Import the logger
 
 class AuthController {
   // User Registration Validation Schema
@@ -12,19 +13,23 @@ class AuthController {
     name: Joi.string().required(),
     mobileNumber: Joi.string().required(),
     email: Joi.string().email().required(),
-    password: Joi.string().min(6).required()
+    password: Joi.string().min(6).required(),
   });
 
   // Login Validation Schema
   loginSchema = Joi.object({
     username: Joi.string().required(),
-    password: Joi.string().required()
+    password: Joi.string().required(),
   });
 
   // User Registration Method
   async registerUser(req, res) {
+    logger.info("Received request for user registration.");
     const { error, value } = this.registerSchema.validate(req.body);
     if (error) {
+      logger.warn(
+        `Validation error during registration: ${error.details[0].message}`
+      );
       return res
         .status(400)
         .send(baseResponse.errorResponseWithMessage(error.details[0].message));
@@ -34,75 +39,79 @@ class AuthController {
     session.startTransaction();
 
     try {
-      // Check if user already exists
-      const existingUser = await User.findOne({ 
-        $or: [
-          { mobileNumber: value.mobileNumber },
-          { email: value.email }
-        ]
+      logger.info("Checking if user already exists.");
+      const existingUser = await User.findOne({
+        $or: [{ mobileNumber: value.mobileNumber }, { email: value.email }],
       });
 
       if (existingUser) {
+        logger.warn(
+          "User already exists with provided mobile number or email."
+        );
         await session.abortTransaction();
         session.endSession();
-        return res.status(400).send(
-          baseResponse.errorResponseWithData(
-            StatusCodes.BAD_REQUEST,
-            "User already exists with this mobile number or email"
-          )
-        );
+        return res
+          .status(400)
+          .send(
+            baseResponse.errorResponseWithData(
+              StatusCodes.BAD_REQUEST,
+              "User already exists with this mobile number or email"
+            )
+          );
       }
 
-      // Hash the password
+      logger.info("Hashing password.");
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(value.password, salt);
 
-      // Create new user
+      logger.info("Creating new user.");
       const newUser = new User({
         name: value.name,
         mobileNumber: value.mobileNumber,
         email: value.email,
         password: hashedPassword,
         referralCode: this.generateReferralCode(),
-        status: 'active'
+        status: "active",
       });
 
-      // Save the user
       await newUser.save({ session });
-
-      // Commit transaction
       await session.commitTransaction();
       session.endSession();
 
+      logger.info(`User registered successfully: ${newUser._id}`);
       return res.status(201).send(
         baseResponse.successResponseWithMessage(
           "User registered successfully",
-          { 
-            userId: newUser._id, 
-            name: newUser.name, 
-            mobileNumber: newUser.mobileNumber 
+          {
+            userId: newUser._id,
+            name: newUser.name,
+            mobileNumber: newUser.mobileNumber,
           }
         )
       );
     } catch (error) {
-      // Rollback transaction
+      logger.error(`Error during user registration: ${error.message}`);
       await session.abortTransaction();
       session.endSession();
 
-      return res.status(500).send(
-        baseResponse.errorResponse(
-          StatusCodes.INTERNAL_SERVER_ERROR,
-          "Registration failed",
-          error
-        )
-      );
+      return res
+        .status(500)
+        .send(
+          baseResponse.errorResponse(
+            StatusCodes.INTERNAL_SERVER_ERROR,
+            "Registration failed",
+            error
+          )
+        );
     }
   }
 
   // Login Method
   async loginUser(req, res) {
+    logger.info("Received request for user login.");
     const { error, value } = this.loginSchema.validate(req.body);
     if (error) {
+      logger.warn(`Validation error during login: ${error.details[0].message}`);
       return res
         .status(400)
         .send(baseResponse.errorResponseWithMessage(error.details[0].message));
@@ -112,7 +121,7 @@ class AuthController {
     session.startTransaction();
 
     try {
-      // Find user by mobileNumber
+      logger.info("Finding user by mobile number.");
       const existingUser = await User.findOne(
         { mobileNumber: value.username },
         null,
@@ -120,105 +129,104 @@ class AuthController {
       );
 
       if (!existingUser) {
+        logger.warn("User not found for the provided mobile number.");
         await session.abortTransaction();
         session.endSession();
-        return res.status(400).send(
-          baseResponse.errorResponseWithData(
-            StatusCodes.BAD_REQUEST,
-            "User Not Found with this mobile number."
-          )
-        );
+        return res
+          .status(400)
+          .send(
+            baseResponse.errorResponseWithData(
+              StatusCodes.BAD_REQUEST,
+              "User Not Found with this mobile number."
+            )
+          );
       }
 
-      // Verify password using bcrypt
+      logger.info("Verifying user password.");
       const isPasswordValid = await this.verifyPassword(
-        value.password, 
+        value.password,
         existingUser.password
       );
-      
+
       if (!isPasswordValid) {
+        logger.warn("Invalid credentials provided during login.");
         await session.abortTransaction();
         session.endSession();
-        return res.status(401).send(
-          baseResponse.errorResponseWithData(
-            StatusCodes.UNAUTHORIZED,
-            "Invalid credentials"
-          )
-        );
+        return res
+          .status(401)
+          .send(
+            baseResponse.errorResponseWithData(
+              StatusCodes.UNAUTHORIZED,
+              "Invalid credentials"
+            )
+          );
       }
 
-      // Create token payload
-      const plainTokenPayload = { 
+      logger.info("Generating JWT token.");
+      const plainTokenPayload = {
         id: existingUser._id,
         name: existingUser.name,
         mobileNumber: existingUser.mobileNumber,
-        email: existingUser.email
+        email: existingUser.email,
       };
 
-      // Generate JWT token
       const token = JwtTokenUtil.createToken(plainTokenPayload);
 
-      // Prepare response data
-      const responseData = {
-        user: {
-          id: existingUser._id,
-          name: existingUser.name,
-          mobileNumber: existingUser.mobileNumber,
-          email: existingUser.email,
-          status: existingUser.status,
-          referralCode: existingUser.referralCode
-        },
-        token,
-      };
-
-      // Commit the transaction
+      logger.info(`User login successful: ${existingUser._id}`);
       await session.commitTransaction();
       session.endSession();
 
-      // Return success response
       return res.status(200).send(
-        baseResponse.successResponseWithMessage(
-          "User Login successful",
-          responseData
-        )
+        baseResponse.successResponseWithMessage("User Login successful", {
+          user: {
+            id: existingUser._id,
+            name: existingUser.name,
+            mobileNumber: existingUser.mobileNumber,
+            email: existingUser.email,
+            status: existingUser.status,
+            referralCode: existingUser.referralCode,
+          },
+          token,
+        })
       );
     } catch (error) {
-      // Rollback the transaction in case of an error
+      logger.error(`Error during user login: ${error.message}`);
       await session.abortTransaction();
       session.endSession();
 
-      // Return error response
-      return res.status(500).send(
-        baseResponse.errorResponse(
-          StatusCodes.INTERNAL_SERVER_ERROR,
-          "Login failed",
-          error
-        )
-      );
+      return res
+        .status(500)
+        .send(
+          baseResponse.errorResponse(
+            StatusCodes.INTERNAL_SERVER_ERROR,
+            "Login failed",
+            error
+          )
+        );
     }
   }
 
   // Password Verification Method
   async verifyPassword(inputPassword, hashedPassword) {
     try {
-      // Compare input password with stored hashed password
       return await bcrypt.compare(inputPassword, hashedPassword);
     } catch (error) {
-      console.error('Password verification error:', error);
+      logger.error(`Password verification error: ${error.message}`);
       return false;
     }
   }
 
   // Generate Unique Referral Code
   generateReferralCode() {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let referralCode = '';
-    
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let referralCode = "";
+
     for (let i = 0; i < 8; i++) {
       const randomIndex = Math.floor(Math.random() * characters.length);
       referralCode += characters[randomIndex];
     }
-    
+
+    logger.info(`Generated referral code: ${referralCode}`);
     return referralCode;
   }
 }
