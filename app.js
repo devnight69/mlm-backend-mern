@@ -18,8 +18,10 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Routes
-const userRoutes = require("./routes/userRoutes");
+const userRoutes = require("./app/routes/userRoutes");
+const authRoutes = require("./app/routes/authRoutes")
 app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
