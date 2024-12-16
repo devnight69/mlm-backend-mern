@@ -31,9 +31,11 @@ app.use(bodyParser.json());
 const userRoutes = require("./app/routes/userRoutes");
 const authRoutes = require("./app/routes/authRoutes");
 const pinRoutes = require('./app/routes/pinRoutes')
+const packageRoutes = require("./app/routes/PackageRoutes");
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/pin", pinRoutes);
+app.use("/api/packages", packageRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
