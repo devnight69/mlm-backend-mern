@@ -4,7 +4,7 @@ const baseResponse = require("../../response/BaseResponse");
 const { StatusCodes } = require("http-status-codes");
 const JwtTokenUtil = require("../../middleware/JwtTokenUtil");
 const mongoose = require("mongoose");
-const Joi = require("joi"); // Assuming Joi is used for validation
+const Joi = require('joi'); // Assuming Joi is used for validation
 
 class AuthController {
   // User Registration Validation Schema
@@ -12,9 +12,7 @@ class AuthController {
     name: Joi.string().required(),
     mobileNumber: Joi.string().required(),
     email: Joi.string().email().required(),
-    password: Joi.string().min(6).required(),
-    referralCode: Joi.string().required(),
-    pin: Joi.string().required(),
+    password: Joi.string().min(6).required()
   });
 
   // Login Validation Schema
@@ -64,8 +62,12 @@ class AuthController {
 
   // Updated User Registration Method
   async registerUser(req, res) {
+    logger.info("Received request for user registration.");
     const { error, value } = this.registerSchema.validate(req.body);
     if (error) {
+      logger.warn(
+        `Validation error during registration: ${error.details[0].message}`
+      );
       return res
         .status(400)
         .send(baseResponse.errorResponseWithMessage(error.details[0].message));
@@ -78,11 +80,17 @@ class AuthController {
 
     try {
       // Check if user already exists
-      const existingUser = await User.findOne({
-        $or: [{ mobileNumber }, { email }],
+      const existingUser = await User.findOne({ 
+        $or: [
+          { mobileNumber: value.mobileNumber },
+          { email: value.email }
+        ]
       });
 
       if (existingUser) {
+        logger.warn(
+          "User already exists with provided mobile number or email."
+        );
         await session.abortTransaction();
         session.endSession();
         return res
@@ -158,44 +166,28 @@ class AuthController {
         }
       }
 
-      // Hash the password
+      logger.info("Hashing password.");
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
 
-      // Create new user
+      logger.info("Creating new user.");
       const newUser = new User({
         name,
         mobileNumber,
         email,
         password: hashedPassword,
         referralCode: this.generateReferralCode(),
-        parentReferralCode: referralParent.referralCode,
-        status: "active",
+        status: 'active'
       });
 
-      // Save the new user
+      // Save the user
       await newUser.save({ session });
-
-      // Update Pin Status
-      pinDetails.status = "used";
-      pinDetails.assignedTo = newUser._id;
-      await pinDetails.save({ session });
-
-      // Save Referral Tracking
-      const referralTracking = new ReferralTracking({
-        referrer: referralParent._id,
-        referred: newUser._id,
-      });
-      await referralTracking.save({ session });
-
-      // Initialize Wallet for New User
-      const wallet = new Wallet({ user: newUser._id });
-      await wallet.save({ session });
 
       // Commit transaction
       await session.commitTransaction();
       session.endSession();
 
+      logger.info(`User registered successfully: ${newUser._id}`);
       return res.status(201).send(
         baseResponse.successResponseWithMessage(
           "User registered successfully",
@@ -207,7 +199,7 @@ class AuthController {
         )
       );
     } catch (error) {
-      // Rollback transaction
+      logger.error(`Error during user registration: ${error.message}`);
       await session.abortTransaction();
       session.endSession();
 
@@ -225,8 +217,10 @@ class AuthController {
 
   // Login Method
   async loginUser(req, res) {
+    logger.info("Received request for user login.");
     const { error, value } = this.loginSchema.validate(req.body);
     if (error) {
+      logger.warn(`Validation error during login: ${error.details[0].message}`);
       return res
         .status(400)
         .send(baseResponse.errorResponseWithMessage(error.details[0].message));
@@ -236,7 +230,7 @@ class AuthController {
     session.startTransaction();
 
     try {
-      // Find user by mobileNumber
+      logger.info("Finding user by mobile number.");
       const existingUser = await User.findOne(
         { mobileNumber: value.username },
         null,
@@ -244,6 +238,7 @@ class AuthController {
       );
 
       if (!existingUser) {
+        logger.warn("User not found for the provided mobile number.");
         await session.abortTransaction();
         session.endSession();
         return res
@@ -256,13 +251,14 @@ class AuthController {
           );
       }
 
-      // Verify password using bcrypt
+      logger.info("Verifying user password.");
       const isPasswordValid = await this.verifyPassword(
         value.password,
         existingUser.password
       );
 
       if (!isPasswordValid) {
+        logger.warn("Invalid credentials provided during login.");
         await session.abortTransaction();
         session.endSession();
         return res
@@ -276,14 +272,13 @@ class AuthController {
       }
 
       // Create token payload
-      const plainTokenPayload = {
+      const plainTokenPayload = { 
         id: existingUser._id,
         name: existingUser.name,
         mobileNumber: existingUser.mobileNumber,
         email: existingUser.email,
       };
 
-      // Generate JWT token
       const token = JwtTokenUtil.createToken(plainTokenPayload);
 
       // Prepare response data
@@ -294,7 +289,7 @@ class AuthController {
           mobileNumber: existingUser.mobileNumber,
           email: existingUser.email,
           status: existingUser.status,
-          referralCode: existingUser.referralCode,
+          referralCode: existingUser.referralCode
         },
         token,
       };
@@ -304,39 +299,34 @@ class AuthController {
       session.endSession();
 
       // Return success response
-      return res
-        .status(200)
-        .send(
-          baseResponse.successResponseWithMessage(
-            "User Login successful",
-            responseData
-          )
-        );
+      return res.status(200).send(
+        baseResponse.successResponseWithMessage(
+          "User Login successful",
+          responseData
+        )
+      );
     } catch (error) {
-      // Rollback the transaction in case of an error
+      logger.error(`Error during user login: ${error.message}`);
       await session.abortTransaction();
       session.endSession();
 
       // Return error response
-      return res
-        .status(500)
-        .send(
-          baseResponse.errorResponse(
-            StatusCodes.INTERNAL_SERVER_ERROR,
-            "Login failed",
-            error
-          )
-        );
+      return res.status(500).send(
+        baseResponse.errorResponse(
+          StatusCodes.INTERNAL_SERVER_ERROR,
+          "Login failed",
+          error
+        )
+      );
     }
   }
 
   // Password Verification Method
   async verifyPassword(inputPassword, hashedPassword) {
     try {
-      // Compare input password with stored hashed password
       return await bcrypt.compare(inputPassword, hashedPassword);
     } catch (error) {
-      console.error("Password verification error:", error);
+      console.error('Password verification error:', error);
       return false;
     }
   }
@@ -350,7 +340,7 @@ class AuthController {
       const randomIndex = Math.floor(Math.random() * characters.length);
       referralCode += characters[randomIndex];
     }
-
+    
     return referralCode;
   }
 }
