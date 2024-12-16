@@ -12,4 +12,6 @@ router.post('/login', (req, res) => {
   AuthController.loginUser(req, res);
 });
 
+router.get('/user/name/:referralCode', AuthController.getUserNameByReferralCode);
+
 module.exports = router;
