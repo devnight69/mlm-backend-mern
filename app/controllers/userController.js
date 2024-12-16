@@ -302,6 +302,64 @@ class UserController {
       });
     }
   }
+
+  // Fetch User Details by Mobile Number or Email
+  async getUserDetails(req, res) {
+    const { mobileNumber, email } = req.query;
+
+    try {
+      // Ensure at least one parameter is provided
+      if (!mobileNumber && !email) {
+        return res
+          .status(400)
+          .send(
+            BaseResponse.errorResponseWithMessage(
+              "Please provide a mobile number or email"
+            )
+          );
+      }
+
+      // Find the user based on mobile number or email
+      const user = await User.findOne({
+        $or: [{ mobileNumber }, { email }],
+      });
+
+      if (!user) {
+        return res
+          .status(404)
+          .send(
+            BaseResponse.errorResponseWithMessage(
+              "User not found with the provided details"
+            )
+          );
+      }
+
+      // Return user details
+      return res.status(200).send(
+        BaseResponse.successResponseWithMessage(
+          "User details fetched successfully",
+          {
+            name: user.name,
+            mobileNumber: user.mobileNumber,
+            email: user.email,
+            referralCode: user.referralCode,
+            userType: user.userType,
+            status: user.status,
+          }
+        )
+      );
+    } catch (error) {
+      return res
+        .status(500)
+        .send(
+          BaseResponse.errorResponse(
+            StatusCodes.INTERNAL_SERVER_ERROR,
+            "Failed to fetch user details",
+            error
+          )
+        );
+    }
+  }
 }
 
 module.exports = new UserController();
