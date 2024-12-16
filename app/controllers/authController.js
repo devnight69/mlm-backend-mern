@@ -4,7 +4,7 @@ const baseResponse = require("../../response/BaseResponse");
 const { StatusCodes } = require("http-status-codes");
 const JwtTokenUtil = require("../../middleware/JwtTokenUtil");
 const mongoose = require("mongoose");
-const Joi = require('joi'); // Assuming Joi is used for validation
+const Joi = require("joi"); // Assuming Joi is used for validation
 
 class AuthController {
   // User Registration Validation Schema
@@ -12,7 +12,7 @@ class AuthController {
     name: Joi.string().required(),
     mobileNumber: Joi.string().required(),
     email: Joi.string().email().required(),
-    password: Joi.string().min(6).required()
+    password: Joi.string().min(6).required(),
   });
 
   // Login Validation Schema
@@ -40,13 +40,11 @@ class AuthController {
       }
 
       // Return user's name
-      return res
-        .status(200)
-        .send(
-          baseResponse.successResponseWithMessage("User fetched successfully", {
-            name: user.name,
-          })
-        );
+      return res.status(200).send(
+        baseResponse.successResponseWithMessage("User fetched successfully", {
+          name: user.name,
+        })
+      );
     } catch (error) {
       return res
         .status(500)
@@ -80,11 +78,8 @@ class AuthController {
 
     try {
       // Check if user already exists
-      const existingUser = await User.findOne({ 
-        $or: [
-          { mobileNumber: value.mobileNumber },
-          { email: value.email }
-        ]
+      const existingUser = await User.findOne({
+        $or: [{ mobileNumber: value.mobileNumber }, { email: value.email }],
       });
 
       if (existingUser) {
@@ -177,7 +172,7 @@ class AuthController {
         email,
         password: hashedPassword,
         referralCode: this.generateReferralCode(),
-        status: 'active'
+        status: "active",
       });
 
       // Save the user
@@ -272,7 +267,7 @@ class AuthController {
       }
 
       // Create token payload
-      const plainTokenPayload = { 
+      const plainTokenPayload = {
         id: existingUser._id,
         name: existingUser.name,
         mobileNumber: existingUser.mobileNumber,
@@ -289,7 +284,7 @@ class AuthController {
           mobileNumber: existingUser.mobileNumber,
           email: existingUser.email,
           status: existingUser.status,
-          referralCode: existingUser.referralCode
+          referralCode: existingUser.referralCode,
         },
         token,
       };
@@ -299,25 +294,29 @@ class AuthController {
       session.endSession();
 
       // Return success response
-      return res.status(200).send(
-        baseResponse.successResponseWithMessage(
-          "User Login successful",
-          responseData
-        )
-      );
+      return res
+        .status(200)
+        .send(
+          baseResponse.successResponseWithMessage(
+            "User Login successful",
+            responseData
+          )
+        );
     } catch (error) {
       logger.error(`Error during user login: ${error.message}`);
       await session.abortTransaction();
       session.endSession();
 
       // Return error response
-      return res.status(500).send(
-        baseResponse.errorResponse(
-          StatusCodes.INTERNAL_SERVER_ERROR,
-          "Login failed",
-          error
-        )
-      );
+      return res
+        .status(500)
+        .send(
+          baseResponse.errorResponse(
+            StatusCodes.INTERNAL_SERVER_ERROR,
+            "Login failed",
+            error
+          )
+        );
     }
   }
 
@@ -326,7 +325,7 @@ class AuthController {
     try {
       return await bcrypt.compare(inputPassword, hashedPassword);
     } catch (error) {
-      console.error('Password verification error:', error);
+      console.error("Password verification error:", error);
       return false;
     }
   }
@@ -340,7 +339,7 @@ class AuthController {
       const randomIndex = Math.floor(Math.random() * characters.length);
       referralCode += characters[randomIndex];
     }
-    
+
     return referralCode;
   }
 }
