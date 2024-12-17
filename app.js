@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const connectDB = require("./config/db");
 const morgan = require("morgan");
 const logger = require("./utils/logger");
+const { permitAll, setupCors } = require("./config/Security");
 
 // Load environment variables
 dotenv.config();
@@ -15,6 +16,9 @@ connectDB();
 // Initialize app
 const app = express();
 
+// Enable CORS for all routes
+setupCors(app);
+
 app.use(
   morgan("combined", {
     stream: {
@@ -22,9 +26,9 @@ app.use(
     },
   })
 );
-//last
+
 // Middleware
-app.use(cors());
+
 app.use(bodyParser.json());
 
 // Routes
