@@ -1,11 +1,16 @@
 const bcrypt = require("bcryptjs");
-const { User, PinManagement, ReferralTracking, Wallet } = require("../models/DataBaseModel");
+const {
+  User,
+  PinManagement,
+  ReferralTracking,
+  Wallet,
+} = require("../models/DataBaseModel");
 const PackageModel = require("../models/PackageModel");
 const baseResponse = require("../../response/BaseResponse");
 const { StatusCodes } = require("http-status-codes");
 const JwtTokenUtil = require("../../middleware/JwtTokenUtil");
 const mongoose = require("mongoose");
-const logger = require("../../utils/logger")
+const logger = require("../../utils/logger");
 const Joi = require("joi"); // Assuming Joi is used for validation
 
 class AuthController {
@@ -14,8 +19,17 @@ class AuthController {
     referralCode: Joi.string().required(),
     pin: Joi.string().required(),
     name: Joi.string().required(),
-    mobileNumber: Joi.string().required(),
-    email: Joi.string().email().required(),
+    mobileNumber: Joi.string()
+      .pattern(/^[6-9]\d{9}$/)
+      .required()
+      .messages({
+        "string.pattern.base":
+          "Invalid mobile number. It must be a 10-digit number starting with 6, 7, 8, or 9.",
+        "any.required": "Mobile number is required.",
+      }),
+    email: Joi.string().email().optional().messages({
+      "string.email": "Invalid email format.",
+    }),
     password: Joi.string().min(6).required(),
   });
 
@@ -204,12 +218,15 @@ class AuthController {
   // Helper Method: Update Referrer Wallet and Rank
   async updateReferrerWallet(referrerId, pinDetails, session) {
     const bonusAmount = 10; // Define bonus amount
-;
     // Fetch the package details using packageId from pinDetails
-    const packageDetails = await PackageModel.findOne({ _id: pinDetails.packageId });
+    const packageDetails = await PackageModel.findOne({
+      _id: pinDetails.packageId,
+    });
 
     // Use the package directIncome or fallback to the default bonusAmount
-    const directIncome = packageDetails ? packageDetails.directIncome : bonusAmount;
+    const directIncome = packageDetails
+      ? packageDetails.directIncome
+      : bonusAmount;
 
     let wallet = await Wallet.findOne({ user: referrerId });
 
@@ -293,6 +310,7 @@ class AuthController {
         name: existingUser.name,
         mobileNumber: existingUser.mobileNumber,
         email: existingUser.email,
+        userType: existingUser.userType,
       };
 
       const token = JwtTokenUtil.createToken(plainTokenPayload);
