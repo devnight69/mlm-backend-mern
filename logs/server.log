@@ -1,0 +1,136 @@
+2024-12-16 21:38:10 [INFO]: ::1 - - [16/Dec/2024:16:08:10 +0000] "POST /api/auth/register HTTP/1.1" 400 132 "-" "PostmanRuntime/7.43.0"
+2024-12-16 21:40:27 [INFO]: Received request for user registration.
+2024-12-16 21:40:27 [INFO]: Checking if user already exists.
+2024-12-16 21:40:27 [WARN]: User already exists with provided mobile number or email.
+2024-12-16 21:40:27 [INFO]: ::1 - - [16/Dec/2024:16:10:27 +0000] "POST /api/auth/register HTTP/1.1" 400 132 "-" "PostmanRuntime/7.43.0"
+2024-12-16 21:55:37 [INFO]: Received request for user registration.
+2024-12-16 21:55:37 [INFO]: Checking if user already exists.
+2024-12-16 21:55:37 [WARN]: User already exists with provided mobile number or email.
+2024-12-16 21:55:37 [INFO]: ::1 - - [16/Dec/2024:16:25:37 +0000] "POST /api/auth/register HTTP/1.1" 400 132 "-" "PostmanRuntime/7.43.0"
+2024-12-16 21:55:47 [INFO]: Received request for user registration.
+2024-12-16 21:55:47 [INFO]: Checking if user already exists.
+2024-12-16 21:55:47 [WARN]: User already exists with provided mobile number or email.
+2024-12-16 21:55:47 [INFO]: ::1 - - [16/Dec/2024:16:25:47 +0000] "POST /api/auth/register HTTP/1.1" 400 132 "-" "PostmanRuntime/7.43.0"
+2024-12-16 21:56:12 [INFO]: Received request for user registration.
+2024-12-16 21:56:12 [WARN]: Validation error during registration: "password" length must be at least 6 characters long
+2024-12-16 21:56:12 [INFO]: ::1 - - [16/Dec/2024:16:26:12 +0000] "POST /api/auth/register HTTP/1.1" 400 137 "-" "PostmanRuntime/7.43.0"
+2024-12-16 21:56:19 [INFO]: Received request for user registration.
+2024-12-16 21:56:19 [INFO]: Checking if user already exists.
+2024-12-16 21:56:20 [INFO]: Hashing password.
+2024-12-16 21:56:20 [INFO]: Creating new user.
+2024-12-16 21:56:20 [INFO]: Generated referral code: AWFZTKCL
+2024-12-16 21:56:20 [INFO]: User registered successfully: 676054ac5b86a883694d39ed
+2024-12-16 21:56:20 [INFO]: ::1 - - [16/Dec/2024:16:26:20 +0000] "POST /api/auth/register HTTP/1.1" 201 205 "-" "PostmanRuntime/7.43.0"
+2024-12-16 21:56:49 [INFO]: Received request for user registration.
+2024-12-16 21:56:49 [INFO]: Checking if user already exists.
+2024-12-16 21:56:49 [WARN]: User already exists with provided mobile number or email.
+2024-12-16 21:56:49 [INFO]: ::1 - - [16/Dec/2024:16:26:49 +0000] "POST /api/auth/register HTTP/1.1" 400 132 "-" "PostmanRuntime/7.43.0"
+2024-12-16 21:57:06 [INFO]: Received request for user login.
+2024-12-16 21:57:06 [INFO]: Finding user by mobile number.
+2024-12-16 21:57:06 [INFO]: Verifying user password.
+2024-12-16 21:57:06 [INFO]: Generating JWT token.
+2024-12-16 21:57:06 [INFO]: User login successful: 676054ac5b86a883694d39ed
+2024-12-16 21:57:06 [INFO]: ::1 - - [16/Dec/2024:16:27:06 +0000] "POST /api/auth/login HTTP/1.1" 200 558 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:13:34 [INFO]: ::1 - - [16/Dec/2024:16:43:34 +0000] "POST /api/packages/create/package HTTP/1.1" 400 76 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:13:53 [INFO]: ::1 - - [16/Dec/2024:16:43:53 +0000] "POST /api/packages/create/package HTTP/1.1" 400 76 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:14:22 [INFO]: ::1 - - [16/Dec/2024:16:44:22 +0000] "POST /api/packages/create/package HTTP/1.1" 201 123 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:18:33 [INFO]: Received request to create a package.
+2024-12-16 22:19:02 [INFO]: Received request to create a package.
+2024-12-16 22:20:31 [INFO]: Received request to create a package.
+2024-12-16 22:23:02 [INFO]: Received request to create a package.
+2024-12-16 22:23:29 [INFO]: Received request to create a package.
+2024-12-16 22:23:43 [INFO]: Received request to create a package.
+2024-12-16 22:23:50 [INFO]: Received request to create a package.
+2024-12-16 22:24:08 [INFO]: Received request to create a package.
+2024-12-16 22:25:03 [INFO]: Received request to create a package.
+2024-12-16 22:25:27 [INFO]: Received request to create a package.
+2024-12-16 22:28:03 [INFO]: Received request to create a package.
+2024-12-16 22:28:28 [INFO]: Received request to create a package.
+2024-12-16 22:30:24 [INFO]: Received request to create a package.
+2024-12-16 22:31:31 [INFO]: Received request to create a package.
+2024-12-16 22:32:29 [INFO]: Received request to create a package.
+2024-12-16 22:35:55 [INFO]: Received request to create a package. function (arg) {
+
+                return this.rule({ [name]: arg });
+            }
+2024-12-16 22:35:55 [INFO]: Validating direct income format.
+2024-12-16 22:35:55 [ERROR]: Error during package creation: directIncome.toLowerCase is not a function
+2024-12-16 22:35:55 [INFO]: ::1 - - [16/Dec/2024:17:05:55 +0000] "POST /api/packages/create/package HTTP/1.1" 500 104 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:36:26 [INFO]: Received request to create a package. function (arg) {
+
+                return this.rule({ [name]: arg });
+            }
+2024-12-16 22:36:26 [INFO]: Validating direct income format.
+2024-12-16 22:36:26 [ERROR]: Error during package creation: directIncome.toLowerCase is not a function
+2024-12-16 22:36:26 [INFO]: ::1 - - [16/Dec/2024:17:06:26 +0000] "POST /api/packages/create/package HTTP/1.1" 500 104 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:36:34 [INFO]: Received request to create a package. function (arg) {
+
+                return this.rule({ [name]: arg });
+            }
+2024-12-16 22:36:34 [INFO]: Validating direct income format.
+2024-12-16 22:36:34 [ERROR]: Error during package creation: directIncome.toLowerCase is not a function
+2024-12-16 22:36:34 [INFO]: ::1 - - [16/Dec/2024:17:06:34 +0000] "POST /api/packages/create/package HTTP/1.1" 500 104 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:36:48 [INFO]: Received request to create a package. function (arg) {
+
+                return this.rule({ [name]: arg });
+            }
+2024-12-16 22:36:48 [INFO]: Validating direct income format.
+2024-12-16 22:36:48 [ERROR]: Error during package creation: directIncome.toLowerCase is not a function
+2024-12-16 22:36:48 [INFO]: ::1 - - [16/Dec/2024:17:06:48 +0000] "POST /api/packages/create/package HTTP/1.1" 500 104 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:37:12 [INFO]: Received request to create a package. function (arg) {
+
+                return this.rule({ [name]: arg });
+            }
+2024-12-16 22:37:12 [WARN]: Validation error during package creation: "directIncome" must be a number
+2024-12-16 22:37:12 [INFO]: ::1 - - [16/Dec/2024:17:07:12 +0000] "POST /api/packages/create/package HTTP/1.1" 400 116 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:37:18 [INFO]: ::1 - - [16/Dec/2024:17:07:18 +0000] "POST /api/packages/create/package HTTP/1.1" 400 1170 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:42:14 [INFO]: Received request to create a package.
+2024-12-16 22:42:14 [INFO]: Creating a new package.
+2024-12-16 22:42:14 [ERROR]: Error during package creation: PackageModel is not a constructor
+2024-12-16 22:42:14 [INFO]: ::1 - - [16/Dec/2024:17:12:14 +0000] "POST /api/packages/create/package HTTP/1.1" 500 104 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:43:40 [INFO]: Received request to create a package.
+2024-12-16 22:43:40 [INFO]: Creating a new package.
+2024-12-16 22:43:40 [ERROR]: Error during package creation: PackageModel is not a constructor
+2024-12-16 22:43:40 [INFO]: ::1 - - [16/Dec/2024:17:13:40 +0000] "POST /api/packages/create/package HTTP/1.1" 500 104 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:45:12 [INFO]: Received request to create a package.
+2024-12-16 22:45:12 [INFO]: Creating a new package.
+2024-12-16 22:45:12 [ERROR]: Error during package creation: PackageModel is not a constructor
+2024-12-16 22:45:12 [INFO]: ::1 - - [16/Dec/2024:17:15:12 +0000] "POST /api/packages/create/package HTTP/1.1" 500 104 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:47:24 [INFO]: Received request to create a package.
+2024-12-16 22:47:24 [INFO]: Creating a new package.
+2024-12-16 22:47:24 [INFO]: Package created successfully: 676060a4480a2fd22de8faf4
+2024-12-16 22:47:24 [INFO]: ::1 - - [16/Dec/2024:17:17:24 +0000] "POST /api/packages/create/package HTTP/1.1" 201 246 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:47:52 [INFO]: Received request to create a package.
+2024-12-16 22:47:52 [INFO]: Creating a new package.
+2024-12-16 22:47:52 [INFO]: Package created successfully: 676060c0480a2fd22de8faf6
+2024-12-16 22:47:52 [INFO]: ::1 - - [16/Dec/2024:17:17:52 +0000] "POST /api/packages/create/package HTTP/1.1" 201 246 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:48:23 [INFO]: Received request to fetch all packages.
+2024-12-16 22:48:23 [INFO]: Packages fetched successfully.
+2024-12-16 22:48:23 [INFO]: ::1 - - [16/Dec/2024:17:18:23 +0000] "GET /api/packages/get/all HTTP/1.1" 200 364 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:49:14 [INFO]: Received request to fetch all packages.
+2024-12-16 22:49:14 [INFO]: Packages fetched successfully.
+2024-12-16 22:49:14 [INFO]: ::1 - - [16/Dec/2024:17:19:14 +0000] "GET /api/packages/get/all HTTP/1.1" 200 242 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:53:04 [INFO]: Received request to update package with ID: 676060a4480a2fd22de8faf4
+2024-12-16 22:53:36 [INFO]: Received request to update package with ID: 676060a4480a2fd22de8faf4
+2024-12-16 22:53:36 [INFO]: Package updated successfully: 676060a4480a2fd22de8faf4
+2024-12-16 22:53:36 [INFO]: ::1 - - [16/Dec/2024:17:23:36 +0000] "PUT /api/packages/update/676060a4480a2fd22de8faf4 HTTP/1.1" 200 233 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:54:08 [INFO]: ::1 - - [16/Dec/2024:17:24:08 +0000] "DELETE /api/packages/update/676060a4480a2fd22de8faf4 HTTP/1.1" 404 186 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:54:29 [INFO]: Received request to delete package with ID: 676060a4480a2fd22de8faf4
+2024-12-16 22:54:29 [INFO]: Package deleted successfully: 676060a4480a2fd22de8faf4
+2024-12-16 22:54:29 [INFO]: ::1 - - [16/Dec/2024:17:24:29 +0000] "DELETE /api/packages/delete/676060a4480a2fd22de8faf4 HTTP/1.1" 200 158 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:54:45 [INFO]: Received request to create a package.
+2024-12-16 22:54:45 [INFO]: Creating a new package.
+2024-12-16 22:54:45 [INFO]: Package created successfully: 6760625de50208fb275b9c0e
+2024-12-16 22:54:45 [INFO]: ::1 - - [16/Dec/2024:17:24:45 +0000] "POST /api/packages/create/package HTTP/1.1" 201 246 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:55:01 [INFO]: Received request to fetch package with ID: 676060a4480a2fd22de8faf4
+2024-12-16 22:55:01 [WARN]: Package not found with ID: 676060a4480a2fd22de8faf4
+2024-12-16 22:55:01 [INFO]: ::1 - - [16/Dec/2024:17:25:01 +0000] "GET /api/packages/get/676060a4480a2fd22de8faf4 HTTP/1.1" 404 121 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:55:08 [INFO]: Received request to fetch all packages.
+2024-12-16 22:55:08 [INFO]: Packages fetched successfully.
+2024-12-16 22:55:08 [INFO]: ::1 - - [16/Dec/2024:17:25:08 +0000] "GET /api/packages/get/all HTTP/1.1" 200 242 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:55:16 [INFO]: Received request to fetch package with ID: 6760625de50208fb275b9c0e
+2024-12-16 22:55:16 [INFO]: Package fetched successfully: 6760625de50208fb275b9c0e
+2024-12-16 22:55:16 [INFO]: ::1 - - [16/Dec/2024:17:25:16 +0000] "GET /api/packages/get/6760625de50208fb275b9c0e HTTP/1.1" 200 239 "-" "PostmanRuntime/7.43.0"
+2024-12-16 22:57:36 [INFO]: Received request to create a package.
+2024-12-16 22:57:36 [WARN]: Package with name 'Sanitari Napkin Only 6pic.' already exists.
+2024-12-16 22:57:36 [INFO]: ::1 - - [16/Dec/2024:17:27:36 +0000] "POST /api/packages/create/package HTTP/1.1" 409 127 "-" "PostmanRuntime/7.43.0"
