@@ -2,7 +2,7 @@ const cors = require('cors');
 
 // CORS Configuration - Allow specific origins
 const corsOptions = {
-  origin: ['*', '*'],  // Specify your allowed origins here
+  origin: '*',  // Allow all origins (or specify specific origins like 'http://localhost:5174')
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,  // Allow cookies or authorization headers
@@ -12,9 +12,6 @@ const corsOptions = {
 function setupCors(app) {
   app.use(cors(corsOptions)); // Apply CORS settings globally
 }
-
-// Remove the role-based authorization middleware
-// function authorizeRoles(allowedRoles) { ... }  // Removed
 
 // Allow all access without any role check
 function permitAll(req, res, next) {

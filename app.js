@@ -1,11 +1,10 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const cors = require("cors");
 const bodyParser = require("body-parser");
 const connectDB = require("./config/db");
 const morgan = require("morgan");
 const logger = require("./utils/logger");
-const { permitAll, setupCors } = require("./config/Security");
+const { setupCors } = require("./config/Security");
 
 // Load environment variables
 dotenv.config();
@@ -16,7 +15,7 @@ connectDB();
 // Initialize app
 const app = express();
 
-// Enable CORS for all routes
+// Apply CORS configuration
 setupCors(app);
 
 app.use(
@@ -26,9 +25,8 @@ app.use(
     },
   })
 );
-
+//last
 // Middleware
-
 app.use(bodyParser.json());
 
 // Routes
@@ -37,11 +35,14 @@ const authRoutes = require("./app/routes/authRoutes");
 const pinRoutes = require("./app/routes/pinRoutes");
 const packageRoutes = require("./app/routes/PackageRoutes");
 const withDrawRoutes = require("./app/routes/withDrawRoute");
+const updateUserRoutes = require("./app/routes/updateUserRoute");
+
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/pin", pinRoutes);
 app.use("/api/packages", packageRoutes);
 app.use("/api/withdraw", withDrawRoutes);
+app.use("/api/update/user/", updateUserRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
