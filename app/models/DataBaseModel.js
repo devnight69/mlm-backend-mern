@@ -58,6 +58,10 @@ const UserSchema = new mongoose.Schema(
       default: "User", // Default to 'User'
       required: true,
     },
+    rank: {
+      type: Number,
+      default: 0,
+    },
     createdAt: {
       type: Date,
       default: Date.now,
