@@ -19,8 +19,17 @@ class AuthController {
     referralCode: Joi.string().required(),
     pin: Joi.string().required(),
     name: Joi.string().required(),
-    mobileNumber: Joi.string().required(),
-    email: Joi.string().email().required(),
+    mobileNumber: Joi.string()
+      .pattern(/^[6-9]\d{9}$/)
+      .required()
+      .messages({
+        "string.pattern.base":
+          "Invalid mobile number. It must be a 10-digit number starting with 6, 7, 8, or 9.",
+        "any.required": "Mobile number is required.",
+      }),
+    email: Joi.string().email().optional().messages({
+      "string.email": "Invalid email format.",
+    }),
     password: Joi.string().min(6).required(),
   });
 
