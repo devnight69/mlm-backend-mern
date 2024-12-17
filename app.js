@@ -30,7 +30,7 @@ app.use(bodyParser.json());
 // Routes
 const userRoutes = require("./app/routes/userRoutes");
 const authRoutes = require("./app/routes/authRoutes");
-const pinRoutes = require('./app/routes/pinRoutes')
+const pinRoutes = require("./app/routes/pinRoutes");
 const packageRoutes = require("./app/routes/PackageRoutes");
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
