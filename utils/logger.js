@@ -1,4 +1,13 @@
 const { createLogger, transports, format } = require("winston");
+const fs = require("fs");
+const path = require("path");
+// Path to the logs directory
+const logDir = path.join(__dirname, "../logs");
+
+// Check if the logs directory exists; if not, create it
+if (!fs.existsSync(logDir)) {
+  fs.mkdirSync(logDir, { recursive: true }); // Create directory recursively
+}
 
 // Define the log format
 const logFormat = format.combine(

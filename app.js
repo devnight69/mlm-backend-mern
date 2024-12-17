@@ -25,14 +25,14 @@ app.use(
     },
   })
 );
-
+//last
 // Middleware
 app.use(bodyParser.json());
 
 // Routes
 const userRoutes = require("./app/routes/userRoutes");
 const authRoutes = require("./app/routes/authRoutes");
-const pinRoutes = require('./app/routes/pinRoutes')
+const pinRoutes = require("./app/routes/pinRoutes");
 const packageRoutes = require("./app/routes/PackageRoutes");
 const withDrawRoutes = require("./app/routes/withDrawRoute");
 const updateUserRoutes = require("./app/routes/updateUserRoute");
