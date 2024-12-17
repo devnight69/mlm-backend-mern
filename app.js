@@ -23,8 +23,6 @@ app.use(
   })
 );
 
-//tstz
-
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
