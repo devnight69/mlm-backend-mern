@@ -26,4 +26,11 @@ router.get("/:userId", authMiddleware, async (req, res) => {
   return res.status(response.status).json(response);
 });
 
+// Route to fetch user and bank details
+router.get("/:referralCode/users", authMiddleware, async (req, res) => {
+  const { referralCode } = req.params;
+  const response = await UpdateUserService.getUserReferreDetails(referralCode);
+  return res.status(response.status).json(response);
+});
+
 module.exports = router;

@@ -3,6 +3,7 @@ const {
   User,
   BankDetails,
   AddressDetails,
+  ReferralTracking,
 } = require("../models/DataBaseModel");
 const BaseResponse = require("../../response/BaseResponse");
 const { StatusCodes } = require("http-status-codes");
@@ -133,6 +134,42 @@ class UpdateUserService {
     } catch (error) {
       logger.error("Error fetching details", error);
       return BaseResponse.errorResponse(error);
+    }
+  }
+
+  static async getUserReferreDetails(referralCode) {
+    try {
+      // Step 1: Check if the referralCode is valid (exists in the database)
+      const referrer = await User.findOne({ referralCode });
+
+      if (!referrer) {
+        // If referralCode is not valid, return an error
+        return BaseResponse.errorResponseWithData(
+          StatusCodes.BAD_REQUEST,
+          "Referral code not found"
+        );
+      }
+
+      // Step 2: Find all users who were referred by the given referralCode
+      const referredUsers = await ReferralTracking.find({
+        referrer: referrer._id,
+      })
+        .populate("referred", "name mobileNumber email userType status referralCode") // Populate referred user details
+        .exec();
+
+      // Step 3: Return the list of referred users
+      const userDetails = referredUsers.map((record) => record.referred);
+      return BaseResponse.successResponseWithMessage(
+        "Referred users fetched successfully",
+        userDetails
+      );
+    } catch (error) {
+      // Catch any errors and send a response
+      logger.error("Error fetching details", error);
+      return BaseResponse.errorResponseWithMessage(
+        "An error occurred while fetching referred users",
+        error
+      );
     }
   }
 }
