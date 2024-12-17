@@ -113,10 +113,15 @@ class AuthController {
       }
 
       // Validate pin
+      // const pinDetails = await PinManagement.findOne({
+      //   pinCode: pin,
+      //   assignedTo: referrer._id,
+      // });
+
       const pinDetails = await PinManagement.findOne({
         pinCode: pin,
-        assignedTo: referrer._id,
       });
+
       if (!pinDetails || pinDetails.status === "used") {
         throw new Error("Invalid or used pin");
       }

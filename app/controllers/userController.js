@@ -339,6 +339,7 @@ class UserController {
         BaseResponse.successResponseWithMessage(
           "User details fetched successfully",
           {
+            id: user._id,
             name: user.name,
             mobileNumber: user.mobileNumber,
             email: user.email,
