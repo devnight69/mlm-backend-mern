@@ -60,7 +60,11 @@ const UserSchema = new mongoose.Schema(
     },
     rank: {
       type: Number,
-      default: 0,
+      default: 1,
+    },
+    level: {
+      type: Number,
+      default: 1, // Default to level 1 on registration
     },
     createdAt: {
       type: Date,
