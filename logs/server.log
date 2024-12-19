@@ -1,0 +1,25 @@
+2024-12-20 01:18:36 [INFO]: ::1 - - [19/Dec/2024:19:48:36 +0000] "POST /api/withdraw/withdrawal/approve-or-deny HTTP/1.1" 401 37 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-20 01:18:43 [INFO]: ::1 - - [19/Dec/2024:19:48:43 +0000] "POST /api/withdraw/withdrawal/approve-or-deny HTTP/1.1" 401 37 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-20 01:19:02 [INFO]: ::1 - - [19/Dec/2024:19:49:02 +0000] "POST /api/withdraw/withdrawal/requests HTTP/1.1" 404 172 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-20 01:19:15 [INFO]: ::1 - - [19/Dec/2024:19:49:15 +0000] "POST /api/withdraw/withdrawal/requests HTTP/1.1" 404 172 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-20 01:19:38 [INFO]: ::1 - - [19/Dec/2024:19:49:38 +0000] "POST /api/withdraw/withdrawal/requests HTTP/1.1" 404 172 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-20 01:20:00 [INFO]: Retrieved 2 withdrawal requests
+2024-12-20 01:20:00 [INFO]: ::1 - - [19/Dec/2024:19:50:00 +0000] "GET /api/withdraw/withdrawal/requests HTTP/1.1" 200 773 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-20 01:20:04 [INFO]: Retrieved 2 withdrawal requests
+2024-12-20 01:20:04 [INFO]: ::1 - - [19/Dec/2024:19:50:04 +0000] "GET /api/withdraw/withdrawal/requests HTTP/1.1" 200 773 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-20 01:21:09 [INFO]: Retrieved 2 withdrawal requests
+2024-12-20 01:21:09 [INFO]: ::1 - - [19/Dec/2024:19:51:09 +0000] "GET /api/withdraw/withdrawal/requests HTTP/1.1" 200 773 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-20 01:21:30 [INFO]: Withdrawal request 67647676b9d4b4c7dffbadef denied and refunded for user 676242e5543aff85dac75c9e
+2024-12-20 01:21:30 [INFO]: ::1 - - [19/Dec/2024:19:51:30 +0000] "POST /api/withdraw/withdrawal/approve-or-deny HTTP/1.1" 200 132 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-20 01:21:30 [INFO]: Retrieved 2 withdrawal requests
+2024-12-20 01:21:30 [INFO]: ::1 - - [19/Dec/2024:19:51:30 +0000] "GET /api/withdraw/withdrawal/requests HTTP/1.1" 200 814 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-20 01:21:36 [INFO]: Withdrawal request 67647691b9d4b4c7dffbadf4 approved successfully for user 676242e5543aff85dac75c9e
+2024-12-20 01:21:36 [INFO]: ::1 - - [19/Dec/2024:19:51:36 +0000] "POST /api/withdraw/withdrawal/approve-or-deny HTTP/1.1" 200 134 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-20 01:21:36 [INFO]: Retrieved 2 withdrawal requests
+2024-12-20 01:21:36 [INFO]: ::1 - - [19/Dec/2024:19:51:36 +0000] "GET /api/withdraw/withdrawal/requests HTTP/1.1" 200 857 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-20 01:21:38 [INFO]: Retrieved 2 withdrawal requests
+2024-12-20 01:21:38 [INFO]: ::1 - - [19/Dec/2024:19:51:38 +0000] "GET /api/withdraw/withdrawal/requests HTTP/1.1" 200 857 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-20 01:21:44 [INFO]: ::1 - - [19/Dec/2024:19:51:44 +0000] "GET /api/update/user/wallet/676242e5543aff85dac75c9e HTTP/1.1" 404 186 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-20 01:21:47 [INFO]: ::1 - - [19/Dec/2024:19:51:47 +0000] "GET /api/update/user/wallet/676242e5543aff85dac75c9e HTTP/1.1" 404 186 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-20 01:21:56 [INFO]: Retrieved 2 withdrawal requests
+2024-12-20 01:21:56 [INFO]: ::1 - - [19/Dec/2024:19:51:56 +0000] "GET /api/withdraw/withdrawal/requests HTTP/1.1" 200 857 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
