@@ -4,6 +4,7 @@ const {
   BankDetails,
   AddressDetails,
   ReferralTracking,
+  Wallet,
 } = require("../models/DataBaseModel");
 const BaseResponse = require("../../response/BaseResponse");
 const { StatusCodes } = require("http-status-codes");
@@ -172,6 +173,44 @@ class UpdateUserService {
       );
     }
   }
+
+  // Get wallet details by userId
+  static async getWalletDetailsByUserId(userId) {
+    try {
+      if (!userId) {
+        return BaseResponse.errorResponseWithData(
+          StatusCodes.BAD_REQUEST,
+          "UserId is required."
+        );
+      }
+
+      const wallet = await Wallet.findOne({ user: userId }).populate(
+        "user",
+        "name email"
+      ); // Populate user details if needed
+
+      if (!wallet) {
+
+          return BaseResponse.errorResponseWithData(
+            StatusCodes.BAD_REQUEST,
+            "Wallet not found for the given user."
+          );
+      }
+
+      return BaseResponse.successResponseWithMessage(
+        "Wallet details fetched successfully",
+        wallet
+      );
+
+    } catch (error) {
+      console.error("Error fetching wallet details:", error);
+      return BaseResponse.errorResponseWithMessage(
+        "An error occurred while fetching referred users",
+        error
+      );
+    }
+  }
+
 }
 
 module.exports = UpdateUserService;
