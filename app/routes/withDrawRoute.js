@@ -19,4 +19,11 @@ router.post(
   withDrawController.approveOrDenyWithdrawal
 ); // Admin approves or denies a request
 
+// Route for admin to view all withdrawal requests
+router.get(
+  "/withdrawal/requests",
+  authMiddleware,
+  withDrawController.getAllWithdrawalRequests
+);
+
 module.exports = router;

@@ -215,6 +215,79 @@ class WithDrawController {
       session.endSession();
     }
   }
+
+  async getAllWithdrawalRequests(req, res) {
+    try {
+      // Check if user is admin
+      if (req.user.userType !== "Admin") {
+        logger.warn(
+          `User ${req.user._id} attempted to view all withdrawal requests without admin permission.`
+        );
+        return res
+          .status(403)
+          .json(
+            baseResponse.errorResponseWithMessage(
+              "You do not have permission to perform this action"
+            )
+          );
+      }
+
+      // Query parameters for filtering and pagination
+      const { status, page = 1, limit = 10, startDate, endDate } = req.query;
+
+      // Build query object
+      let query = {};
+
+      // Add status filter if provided
+      if (status) {
+        query.status = status;
+      }
+
+      // Add date range filter if provided
+      if (startDate || endDate) {
+        query.createdAt = {};
+        if (startDate) {
+          query.createdAt.$gte = new Date(startDate);
+        }
+        if (endDate) {
+          query.createdAt.$lte = new Date(endDate);
+        }
+      }
+
+      // Calculate skip value for pagination
+      const skip = (page - 1) * limit;
+
+      // Get total count for pagination
+      const total = await WithdrawalRequest.countDocuments(query);
+
+      // Fetch withdrawal requests with pagination and populate user details
+      const withdrawalRequests = await WithdrawalRequest.find(query)
+        .populate("user", "name email phone") // Populate basic user details
+        .sort({ createdAt: -1 }) // Sort by latest first
+        .skip(skip)
+        .limit(parseInt(limit));
+
+      logger.info(`Retrieved ${withdrawalRequests.length} withdrawal requests`);
+
+      return res.status(200).json(
+        baseResponse.successResponseWithMessage(
+          "Withdrawal requests retrieved successfully",
+          {
+            withdrawalRequests,
+            pagination: {
+              total,
+              page: parseInt(page),
+              pages: Math.ceil(total / limit),
+              limit: parseInt(limit),
+            },
+          }
+        )
+      );
+    } catch (error) {
+      logger.error(`Error in getAllWithdrawalRequests: ${error.message}`);
+      return res.status(500).json(baseResponse.errorResponse(error));
+    }
+  }
 }
 
 // Export the controller instance
