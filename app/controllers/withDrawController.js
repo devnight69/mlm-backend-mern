@@ -10,15 +10,22 @@ class WithDrawController {
   // Login Validation Schema
   withDrawSchema = Joi.object({
     userId: Joi.string().required(),
-    amountRequested: Joi.string().required(),
+    amountRequested: Joi.number().min(1).required(),
   });
+
+  constructor() {
+    this.createWithdrawalRequest = this.createWithdrawalRequest.bind(this);
+    this.approveOrDenyWithdrawal = this.approveOrDenyWithdrawal.bind(this);
+  }
 
   // Method to create withdrawal request
   async createWithdrawalRequest(req, res) {
     const session = await mongoose.startSession();
 
     try {
+      console.log("req.body", req.body);
       const { error, value } = this.withDrawSchema.validate(req.body);
+      console.log("req.body", req.body);
       if (error) {
         logger.warn(
           `Validation error during withdrawal request: ${error.details[0].message}`

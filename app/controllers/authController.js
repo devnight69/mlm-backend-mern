@@ -104,13 +104,19 @@ class AuthController {
       const referrer = await User.findOne({ referralCode });
       if (!referrer) throw new Error("Invalid referral code");
 
+      let pinDetails;
+
+      const query = { pinCode: pin };
+      if (referrer.userType !== "Admin") {
+        query.assignedTo = referrer._id;
+      }
+
+      pinDetails = await PinManagement.findOne(query);
+
       // Validate pin
-      const pinDetails = await PinManagement.findOne({
-        pinCode: pin,
-        assignedTo: referrer._id,
-      });
-      if (!pinDetails || pinDetails.status === "used")
+      if (!pinDetails || pinDetails.status === "used") {
         throw new Error("Invalid or used pin");
+      }
 
       // Hash the password
       const hashedPassword = await bcrypt.hash(
@@ -316,7 +322,9 @@ class AuthController {
       },
     };
 
-    const packageIncome = levelIncomeMap[packageDetails.productPrice] || {};
+    const productPrice = Number(packageDetails.productPrice);
+
+    const packageIncome = levelIncomeMap[productPrice] || {};
     income =
       (packageIncome[updatedLevel] || packageIncome.default) +
       packageDetails.directIncome;
