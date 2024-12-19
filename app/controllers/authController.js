@@ -114,6 +114,7 @@ class AuthController {
       pinDetails = await PinManagement.findOne(query);
 
       // Validate pin
+      
       if (!pinDetails || pinDetails.status === "used") {
         throw new Error("Invalid or used pin");
       }
