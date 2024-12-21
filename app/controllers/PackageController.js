@@ -11,6 +11,8 @@ class PackageController {
     productName: Joi.string().required(),
     productPrice: Joi.string().required(),
     directIncome: Joi.number().positive().precision(2).required(),
+    type: Joi.string().required(),
+    cashback: Joi.string().required(),
   });
 
   constructor() {
