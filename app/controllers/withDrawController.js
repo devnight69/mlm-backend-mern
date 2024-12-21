@@ -23,9 +23,9 @@ class WithDrawController {
     const session = await mongoose.startSession();
 
     try {
-      console.log("req.body", req.body);
+      logger.info("req.body", req.body);
       const { error, value } = this.withDrawSchema.validate(req.body);
-      console.log("req.body", req.body);
+      logger.info("req.body", req.body);
       if (error) {
         logger.warn(
           `Validation error during withdrawal request: ${error.details[0].message}`

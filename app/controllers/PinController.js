@@ -57,7 +57,7 @@ class PinController {
 
       const { userId, packageId } = req.body;
 
-      console.log("userId PackegeId ", userId, packageId);
+      logger.info("userId PackegeId ", userId, packageId);
 
       // Step 1: Find user by userId
       const user = await User.findById(userId);
@@ -103,6 +103,7 @@ class PinController {
         pinCode: pin,
         generatedBy: userId,
         packageId: packageId,
+        type: packageDetails.type,
         assignedTo: null, // You can assign it later if needed
         status: "available", // Default status is 'available'
         validityDate: new Date(Date.now() + 35 * 24 * 60 * 60 * 1000), // Set validity date to 35 days from now
@@ -110,6 +111,21 @@ class PinController {
 
       // Save the PinManagement document
       await pinManagement.save();
+
+      let baseDate =
+        user.validTill && user.validTill > new Date()
+          ? user.validTill
+          : new Date();
+      const newValidTill = new Date(
+        baseDate.getTime() + 35 * 24 * 60 * 60 * 1000
+      );
+      user.validTill = newValidTill;
+      await user.save();
+
+      logger.info(
+        `Admin's validTill updated to ${newValidTill} for userId: ${userId}`
+      );
+
       logger.info(`PIN generated and saved successfully for userId: ${userId}`);
       return res.status(StatusCodes.OK).json({
         message: "PIN generated and saved successfully",
@@ -257,6 +273,17 @@ class PinController {
 
       logger.info(
         `Pin transferred successfully from ${pinRecord.generatedBy} to ${userId}`
+      );
+
+      const baseDate = user.validTill || new Date();
+      const newValidTill = new Date(
+        baseDate.getTime() + 35 * 24 * 60 * 60 * 1000
+      );
+      user.validTill = newValidTill;
+      await user.save();
+
+      logger.info(
+        `User's validTill updated to ${newValidTill} for userId: ${userId}`
       );
 
       // Step 6: Return success response

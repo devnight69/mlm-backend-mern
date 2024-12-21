@@ -66,6 +66,10 @@ const UserSchema = new mongoose.Schema(
       type: Number,
       default: 1, // Default to level 1 on registration
     },
+    validTill: {
+      type: Date,
+      default: null, // Default to null if not provided
+    },
     createdAt: {
       type: Date,
       default: Date.now,
@@ -125,6 +129,10 @@ const PinManagementSchema = new mongoose.Schema(
       type: Date,
     },
     packageId: {
+      type: String,
+      required: true,
+    },
+    type: {
       type: String,
       required: true,
     },

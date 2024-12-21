@@ -155,7 +155,10 @@ class UpdateUserService {
       const referredUsers = await ReferralTracking.find({
         referrer: referrer._id,
       })
-        .populate("referred", "name mobileNumber email userType status referralCode") // Populate referred user details
+        .populate(
+          "referred",
+          "name mobileNumber email userType status referralCode"
+        ) // Populate referred user details
         .exec();
 
       // Step 3: Return the list of referred users
@@ -190,20 +193,18 @@ class UpdateUserService {
       ); // Populate user details if needed
 
       if (!wallet) {
-
-          return BaseResponse.errorResponseWithData(
-            StatusCodes.BAD_REQUEST,
-            "Wallet not found for the given user."
-          );
+        return BaseResponse.errorResponseWithData(
+          StatusCodes.BAD_REQUEST,
+          "Wallet not found for the given user."
+        );
       }
 
       return BaseResponse.successResponseWithMessage(
         "Wallet details fetched successfully",
         wallet
       );
-
     } catch (error) {
-      console.error("Error fetching wallet details:", error);
+      logger.error("Error fetching wallet details:", error);
       return BaseResponse.errorResponseWithMessage(
         "An error occurred while fetching referred users",
         error
@@ -211,6 +212,42 @@ class UpdateUserService {
     }
   }
 
+  static async getTotalReferralCount(userId) {
+    try {
+      if (!userId) {
+        return BaseResponse.errorResponseWithData(
+          StatusCodes.BAD_REQUEST,
+          "UserId is required."
+        );
+      }
+
+      const [directReferrals, indirectReferrals] = await Promise.all([
+        ReferralTracking.countDocuments({ referrer: userId }),
+        ReferralTracking.countDocuments({
+          referrer: { $ne: userId },
+          referred: userId,
+        }),
+      ]);
+
+      // Improved logging consistency
+      logger.info(`Direct Referrals Count: ${directReferrals}`);
+      logger.info(`Indirect Referrals Count: ${indirectReferrals}`);
+
+      const totalCount = directReferrals + indirectReferrals;
+      logger.info(`Total Referrals Count: ${totalCount}`);
+
+      return BaseResponse.successResponseWithMessage(
+        "Referral Count Fetched Successfully",
+        totalCount
+      );
+    } catch (error) {
+      logger.error("Error fetching referral count:", error);
+      return BaseResponse.errorResponseWithMessage(
+        "An error occurred while fetching referred users",
+        error
+      );
+    }
+  }
 }
 
 module.exports = UpdateUserService;
