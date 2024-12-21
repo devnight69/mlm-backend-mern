@@ -428,11 +428,11 @@ class AuthController {
       }),
     ]);
 
-    console.log(`${directReferrals} directReferrals`);
-    console.log(`${indirectReferrals} indirectReferrals`);
+    logger.info(`${directReferrals} directReferrals`);
+    logger.info(`${indirectReferrals} indirectReferrals`);
 
     const totalCount = directReferrals + indirectReferrals;
-    console.log(`${totalCount} totalCount`);
+    logger.info(`${totalCount} totalCount`);
 
     // Determine the level based on the thresholds
     if (totalCount >= 9765625) return 10;
@@ -564,7 +564,7 @@ class AuthController {
     try {
       return await bcrypt.compare(inputPassword, hashedPassword);
     } catch (error) {
-      console.error("Password verification error:", error);
+      logger.error("Password verification error:", error);
       return false;
     }
   }

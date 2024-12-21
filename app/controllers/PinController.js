@@ -57,7 +57,7 @@ class PinController {
 
       const { userId, packageId } = req.body;
 
-      console.log("userId PackegeId ", userId, packageId);
+      logger.info("userId PackegeId ", userId, packageId);
 
       // Step 1: Find user by userId
       const user = await User.findById(userId);
@@ -103,6 +103,7 @@ class PinController {
         pinCode: pin,
         generatedBy: userId,
         packageId: packageId,
+        type: packageDetails.type,
         assignedTo: null, // You can assign it later if needed
         status: "available", // Default status is 'available'
         validityDate: new Date(Date.now() + 35 * 24 * 60 * 60 * 1000), // Set validity date to 35 days from now
