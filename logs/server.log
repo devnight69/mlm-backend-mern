@@ -23,3 +23,55 @@
 2024-12-20 01:21:47 [INFO]: ::1 - - [19/Dec/2024:19:51:47 +0000] "GET /api/update/user/wallet/676242e5543aff85dac75c9e HTTP/1.1" 404 186 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 2024-12-20 01:21:56 [INFO]: Retrieved 2 withdrawal requests
 2024-12-20 01:21:56 [INFO]: ::1 - - [19/Dec/2024:19:51:56 +0000] "GET /api/withdraw/withdrawal/requests HTTP/1.1" 200 857 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:41:31 [INFO]: Received request for user login.
+2024-12-21 11:41:31 [INFO]: Finding user by mobile number.
+2024-12-21 11:41:31 [INFO]: Verifying user password.
+2024-12-21 11:41:32 [INFO]: ::1 - - [21/Dec/2024:06:11:32 +0000] "POST /api/auth/login HTTP/1.1" 200 562 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:41:32 [INFO]: Fetched details successfully for user ID: 676242e5543aff85dac75c9e
+2024-12-21 11:41:32 [INFO]: ::1 - - [21/Dec/2024:06:11:32 +0000] "GET /api/update/user/676242e5543aff85dac75c9e HTTP/1.1" 200 922 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:41:34 [INFO]: Pins fetched successfully for userId: 676242e5543aff85dac75c9e
+2024-12-21 11:41:34 [INFO]: ::1 - - [21/Dec/2024:06:11:34 +0000] "GET /api/pin/pins/676242e5543aff85dac75c9e HTTP/1.1" 200 5096 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:41:34 [INFO]: Fetched details successfully for user ID: 676242e5543aff85dac75c9e
+2024-12-21 11:41:34 [INFO]: ::1 - - [21/Dec/2024:06:11:34 +0000] "GET /api/update/user/676242e5543aff85dac75c9e HTTP/1.1" 200 922 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:41:36 [INFO]: Received request to fetch all packages.
+2024-12-21 11:41:36 [INFO]: Packages fetched successfully.
+2024-12-21 11:41:36 [INFO]: ::1 - - [21/Dec/2024:06:11:36 +0000] "GET /api/packages/get/all HTTP/1.1" 200 567 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:49:15 [INFO]: Received request to fetch all packages.
+2024-12-21 11:49:15 [INFO]: Packages fetched successfully.
+2024-12-21 11:49:15 [INFO]: ::1 - - [21/Dec/2024:06:19:15 +0000] "GET /api/packages/get/all HTTP/1.1" 200 121 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:49:25 [INFO]: Received request to fetch all packages.
+2024-12-21 11:49:26 [INFO]: Packages fetched successfully.
+2024-12-21 11:49:26 [INFO]: ::1 - - [21/Dec/2024:06:19:26 +0000] "GET /api/packages/get/all HTTP/1.1" 200 121 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:49:28 [INFO]: Retrieved 4 withdrawal requests
+2024-12-21 11:49:28 [INFO]: ::1 - - [21/Dec/2024:06:19:28 +0000] "GET /api/withdraw/withdrawal/requests HTTP/1.1" 200 1462 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:49:29 [INFO]: Pins fetched successfully for userId: 676242e5543aff85dac75c9e
+2024-12-21 11:49:29 [INFO]: ::1 - - [21/Dec/2024:06:19:29 +0000] "GET /api/pin/pins/676242e5543aff85dac75c9e HTTP/1.1" 200 5096 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:49:29 [INFO]: Fetched details successfully for user ID: 676242e5543aff85dac75c9e
+2024-12-21 11:49:29 [INFO]: ::1 - - [21/Dec/2024:06:19:29 +0000] "GET /api/update/user/676242e5543aff85dac75c9e HTTP/1.1" 200 922 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:49:30 [INFO]: Received request to fetch all packages.
+2024-12-21 11:49:30 [INFO]: Packages fetched successfully.
+2024-12-21 11:49:30 [INFO]: ::1 - - [21/Dec/2024:06:19:30 +0000] "GET /api/packages/get/all HTTP/1.1" 200 121 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:49:49 [INFO]: Fetched details successfully for user ID: 676242e5543aff85dac75c9e
+2024-12-21 11:49:49 [INFO]: ::1 - - [21/Dec/2024:06:19:49 +0000] "GET /api/update/user/676242e5543aff85dac75c9e HTTP/1.1" 200 922 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:49:51 [INFO]: Fetched details successfully for user ID: 676242e5543aff85dac75c9e
+2024-12-21 11:49:51 [INFO]: ::1 - - [21/Dec/2024:06:19:51 +0000] "GET /api/update/user/676242e5543aff85dac75c9e HTTP/1.1" 200 922 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:49:52 [INFO]: ::1 - - [21/Dec/2024:06:19:52 +0000] "GET /api/update/user/9932152533/users HTTP/1.1" 200 998 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:49:53 [INFO]: ::1 - - [21/Dec/2024:06:19:53 +0000] "GET /api/update/user/wallet/676242e5543aff85dac75c9e HTTP/1.1" 200 384 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:50:19 [INFO]: ::1 - - [21/Dec/2024:06:20:19 +0000] "GET /api/update/user/wallet/676242e5543aff85dac75c9e HTTP/1.1" 200 384 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:50:34 [INFO]: Received request for user login.
+2024-12-21 11:50:34 [INFO]: Finding user by mobile number.
+2024-12-21 11:50:34 [INFO]: Verifying user password.
+2024-12-21 11:50:35 [INFO]: ::1 - - [21/Dec/2024:06:20:35 +0000] "POST /api/auth/login HTTP/1.1" 200 562 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:50:35 [INFO]: Fetched details successfully for user ID: 676242e5543aff85dac75c9e
+2024-12-21 11:50:35 [INFO]: ::1 - - [21/Dec/2024:06:20:35 +0000] "GET /api/update/user/676242e5543aff85dac75c9e HTTP/1.1" 200 922 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:50:37 [INFO]: Pins fetched successfully for userId: 676242e5543aff85dac75c9e
+2024-12-21 11:50:37 [INFO]: ::1 - - [21/Dec/2024:06:20:37 +0000] "GET /api/pin/pins/676242e5543aff85dac75c9e HTTP/1.1" 200 5096 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:50:37 [INFO]: Fetched details successfully for user ID: 676242e5543aff85dac75c9e
+2024-12-21 11:50:37 [INFO]: ::1 - - [21/Dec/2024:06:20:37 +0000] "GET /api/update/user/676242e5543aff85dac75c9e HTTP/1.1" 200 922 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:50:40 [INFO]: Received request to fetch all packages.
+2024-12-21 11:50:40 [INFO]: Packages fetched successfully.
+2024-12-21 11:50:40 [INFO]: ::1 - - [21/Dec/2024:06:20:40 +0000] "GET /api/packages/get/all HTTP/1.1" 200 121 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:51:11 [INFO]: Pins fetched successfully for userId: 676242e5543aff85dac75c9e
+2024-12-21 11:51:11 [INFO]: ::1 - - [21/Dec/2024:06:21:11 +0000] "GET /api/pin/pins/676242e5543aff85dac75c9e HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 11:51:11 [INFO]: Fetched details successfully for user ID: 676242e5543aff85dac75c9e
+2024-12-21 11:51:11 [INFO]: ::1 - - [21/Dec/2024:06:21:11 +0000] "GET /api/update/user/676242e5543aff85dac75c9e HTTP/1.1" 200 922 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"

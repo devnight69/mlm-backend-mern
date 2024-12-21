@@ -1,3 +1,4 @@
+// PackageSchema.js
 const mongoose = require("mongoose");
 
 const PackageSchema = new mongoose.Schema({
@@ -10,6 +11,14 @@ const PackageSchema = new mongoose.Schema({
     required: true,
   },
   directIncome: {
+    type: Number,
+    required: true,
+  },
+  type: {
+    type: String,
+    required: true,
+  },
+  cashback: {
     type: Number,
     required: true,
   },
