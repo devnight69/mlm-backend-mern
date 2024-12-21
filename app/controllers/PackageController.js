@@ -35,7 +35,7 @@ class PackageController {
         .send(baseResponse.errorResponseWithMessage(error.details[0].message));
     }
 
-    const { productName, productPrice, directIncome } = value;
+    const { productName, productPrice, directIncome, type, cashback } = value;
 
     const session = await mongoose.startSession();
     session.startTransaction();
@@ -58,12 +58,15 @@ class PackageController {
       // Ensure direct income is stored precisely with 2 decimal places
       const directIncomeInRupees =
         Math.round(parseFloat(directIncome) * 100) / 100;
+      const cashbackInRupees = Math.round(parseFloat(cashback) * 100) / 100;
 
       logger.info("Creating a new package.");
       const newPackage = new PackageModel({
         productName,
         productPrice,
         directIncome: directIncomeInRupees,
+        type,
+        cashback: cashbackInRupees,
       });
 
       // Save the package
@@ -82,6 +85,8 @@ class PackageController {
             productName: newPackage.productName,
             productPrice: newPackage.productPrice,
             directIncome: `₹${newPackage.directIncome.toFixed(2)}`,
+            type: newPackage.type,
+            cashback: `₹${newPackage.cashback.toFixed(2)}`,
           }
         )
       );
@@ -168,6 +173,8 @@ class PackageController {
             productName: packageDetails.productName,
             productPrice: packageDetails.productPrice,
             directIncome: `₹${packageDetails.directIncome.toFixed(2)}`,
+            type: newPackage.type,
+            cashback: `₹${newPackage.cashback.toFixed(2)}`,
           }
         )
       );
@@ -199,7 +206,7 @@ class PackageController {
         .send(baseResponse.errorResponseWithMessage(error.details[0].message));
     }
 
-    const { productName, productPrice, directIncome } = value;
+    const { productName, productPrice, directIncome, type, cashback } = value;
 
     const session = await mongoose.startSession();
     session.startTransaction();
@@ -208,13 +215,15 @@ class PackageController {
       // Ensure direct income is stored precisely with 2 decimal places
       const directIncomeInRupees =
         Math.round(parseFloat(directIncome) * 100) / 100;
-
+      const cashbackInRupees = Math.round(parseFloat(cashback) * 100) / 100;
       const updatedPackage = await PackageModel.findByIdAndUpdate(
         id,
         {
           productName,
           productPrice,
           directIncome: directIncomeInRupees,
+          type,
+          cashback: cashbackInRupees,
         },
         { new: true, session }
       );
@@ -245,6 +254,8 @@ class PackageController {
             productName: updatedPackage.productName,
             productPrice: updatedPackage.productPrice,
             directIncome: `₹${updatedPackage.directIncome.toFixed(2)}`,
+            type: updatedPackage.type,
+            cashback: `₹${updatedPackage.cashback.toFixed(2)}`,
           }
         )
       );

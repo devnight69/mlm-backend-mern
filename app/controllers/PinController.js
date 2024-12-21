@@ -13,7 +13,6 @@ class PinController {
   constructor() {
     // Bind methods to the current instance (this) to preserve the context
     this.generatePinAndSave = this.generatePinAndSave.bind(this);
-    this.generatePin = this.generatePin.bind(this);
     this.getAllPinsByUser = this.getAllPinsByUser.bind(this);
     this.transferPin = this.transferPin.bind(this);
   }
@@ -123,43 +122,6 @@ class PinController {
       );
       logger.error(`Sending response: ${JSON.stringify(errorResponse)}`);
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
-    }
-  }
-
-  // Endpoint to generate PIN and return it
-  async generatePin(req, res) {
-    const { userId, packageId } = req.body;
-
-    // Validate the request body using Joi
-    const { error } = this.pinDTO.validate(req.body);
-    if (error) {
-      logger.error(
-        `Validation failed for userId: ${userId} - ${error.details[0].message}`
-      );
-      const errorResponse = baseResponse.errorResponseWithData(
-        StatusCodes.BAD_REQUEST,
-        error.details[0].message
-      );
-      logger.error(`Sending response: ${JSON.stringify(errorResponse)}`);
-      return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
-    }
-
-    // Call generatePinAndSave with the validated DTO
-    const result = await this.generatePinAndSave(req, res);
-
-    if (result.error) {
-      const errorResponse = baseResponse.errorResponseWithData(
-        StatusCodes.BAD_REQUEST,
-        result.error
-      );
-      logger.error(`Sending response: ${JSON.stringify(errorResponse)}`);
-      return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
-    } else {
-      logger.info(`PIN generated successfully for userId: ${userId}`);
-      return res.status(StatusCodes.OK).json({
-        pin: result.pin,
-        message: result.message,
-      });
     }
   }
 
