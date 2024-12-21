@@ -35,12 +35,12 @@ class UserService {
   }
 
   async createUser(userDto) {
-    console.log("[UserService] Starting user creation process.");
+    logger.info("[UserService] Starting user creation process.");
     const session = await mongoose.startSession();
     session.startTransaction();
 
     try {
-      console.log("[UserService] Checking if user already exists.");
+      logger.info("[UserService] Checking if user already exists.");
       const existingUser = await User.findOne(
         {
           $or: [
@@ -62,14 +62,14 @@ class UserService {
         );
       }
 
-      console.log("[UserService] Hashing password.");
+      logger.info("[UserService] Hashing password.");
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(userDto.password, salt);
 
-      console.log("[UserService] Generating referral code.");
+      logger.info("[UserService] Generating referral code.");
       const referralCode = this.generateReferralCode();
 
-      console.log("[UserService] Creating new user.");
+      logger.info("[UserService] Creating new user.");
       const newUser = new User({
         ...userDto,
         password: hashedPassword,
@@ -79,7 +79,7 @@ class UserService {
 
       await newUser.save({ session });
 
-      console.log("[UserService] Preparing token payload.");
+      logger.info("[UserService] Preparing token payload.");
       const tokenPayload = {
         id: newUser._id,
         name: newUser.name,
@@ -88,7 +88,7 @@ class UserService {
         referralCode: newUser.referralCode,
       };
 
-      console.log("[UserService] Generating token.");
+      logger.info("[UserService] Generating token.");
       const token = JwtTokenUtil.createToken(tokenPayload);
 
       const responseData = {
@@ -106,13 +106,13 @@ class UserService {
       await session.commitTransaction();
       session.endSession();
 
-      console.log("[UserService] User created successfully.");
+      logger.info("[UserService] User created successfully.");
       return BaseResponse.successResponseWithMessage(
         "User created successfully",
         responseData
       );
     } catch (error) {
-      console.error(
+      logger.error(
         `[UserService] Error during user creation: ${error.message}`
       );
       await session.abortTransaction();
@@ -126,7 +126,7 @@ class UserService {
   }
 
   async getAllUsers() {
-    console.log("[UserService] Retrieving all users.");
+    logger.info("[UserService] Retrieving all users.");
     return await User.find(
       {},
       {
@@ -137,7 +137,7 @@ class UserService {
   }
 
   async getUserById(userId) {
-    console.log(`[UserService] Retrieving user by ID: ${userId}`);
+    logger.info(`[UserService] Retrieving user by ID: ${userId}`);
     return await User.findById(userId, {
       password: 0,
       __v: 0,
@@ -145,10 +145,10 @@ class UserService {
   }
 
   async updateUser(userId, userDto) {
-    console.log(`[UserService] Updating user with ID: ${userId}`);
+    logger.info(`[UserService] Updating user with ID: ${userId}`);
 
     if (userDto.password) {
-      console.log("[UserService] Hashing updated password.");
+      logger.info("[UserService] Hashing updated password.");
       const salt = await bcrypt.genSalt(10);
       userDto.password = await bcrypt.hash(userDto.password, salt);
     }
@@ -160,7 +160,7 @@ class UserService {
   }
 
   async deleteUser(userId) {
-    console.log(`[UserService] Deleting user with ID: ${userId}`);
+    logger.info(`[UserService] Deleting user with ID: ${userId}`);
     return await User.findByIdAndDelete(userId);
   }
 }
@@ -171,7 +171,7 @@ class UserController {
   }
 
   async createUser(req, res) {
-    console.log("[UserController] Received request to create user.");
+    logger.info("[UserController] Received request to create user.");
 
     try {
       const { error, value } = userRequestDto.validate(req.body);
@@ -190,10 +190,10 @@ class UserController {
           ? StatusCodes.CREATED
           : StatusCodes.BAD_REQUEST;
 
-      console.log(`[UserController] User creation result: ${result.status}`);
+      logger.info(`[UserController] User creation result: ${result.status}`);
       res.status(statusCode).json(result);
     } catch (err) {
-      console.error(`[UserController] Internal server error: ${err.message}`);
+      logger.error(`[UserController] Internal server error: ${err.message}`);
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         message: "Internal server error",
         error: err.message,
@@ -202,13 +202,13 @@ class UserController {
   }
 
   async getAllUsers(req, res) {
-    console.log("[UserController] Received request to retrieve all users.");
+    logger.info("[UserController] Received request to retrieve all users.");
 
     try {
       const users = await this.userService.getAllUsers();
       res.status(StatusCodes.OK).json(users);
     } catch (err) {
-      console.error(`[UserController] Error retrieving users: ${err.message}`);
+      logger.error(`[UserController] Error retrieving users: ${err.message}`);
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         message: "Failed to retrieve users",
         error: err.message,
@@ -217,7 +217,7 @@ class UserController {
   }
 
   async getUserById(req, res) {
-    console.log(
+    logger.info(
       `[UserController] Received request to retrieve user by ID: ${req.params.id}`
     );
 
@@ -233,7 +233,7 @@ class UserController {
 
       res.status(StatusCodes.OK).json(user);
     } catch (err) {
-      console.error(`[UserController] Error retrieving user: ${err.message}`);
+      logger.error(`[UserController] Error retrieving user: ${err.message}`);
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         message: "Failed to retrieve user",
         error: err.message,
@@ -242,7 +242,7 @@ class UserController {
   }
 
   async updateUser(req, res) {
-    console.log(
+    logger.info(
       `[UserController] Received request to update user with ID: ${req.params.id}`
     );
 
@@ -274,7 +274,7 @@ class UserController {
         user: updatedUser,
       });
     } catch (err) {
-      console.error(`[UserController] Error updating user: ${err.message}`);
+      logger.error(`[UserController] Error updating user: ${err.message}`);
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         message: "Failed to update user",
         error: err.message,

@@ -204,7 +204,7 @@ class UpdateUserService {
         wallet
       );
     } catch (error) {
-      console.error("Error fetching wallet details:", error);
+      logger.error("Error fetching wallet details:", error);
       return BaseResponse.errorResponseWithMessage(
         "An error occurred while fetching referred users",
         error
