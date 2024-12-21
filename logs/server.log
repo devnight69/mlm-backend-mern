@@ -75,3 +75,6 @@
 2024-12-21 11:51:11 [INFO]: ::1 - - [21/Dec/2024:06:21:11 +0000] "GET /api/pin/pins/676242e5543aff85dac75c9e HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 2024-12-21 11:51:11 [INFO]: Fetched details successfully for user ID: 676242e5543aff85dac75c9e
 2024-12-21 11:51:11 [INFO]: ::1 - - [21/Dec/2024:06:21:11 +0000] "GET /api/update/user/676242e5543aff85dac75c9e HTTP/1.1" 200 922 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-21 12:12:27 [INFO]: Received request to create a package.
+2024-12-21 12:12:27 [WARN]: Validation error during package creation: "type" is not allowed
+2024-12-21 12:12:27 [INFO]: ::1 - - [21/Dec/2024:06:42:27 +0000] "POST /api/packages/create/package HTTP/1.1" 400 106 "-" "PostmanRuntime/7.43.0"
