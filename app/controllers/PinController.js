@@ -110,6 +110,21 @@ class PinController {
 
       // Save the PinManagement document
       await pinManagement.save();
+
+      let baseDate =
+        user.validTill && user.validTill > new Date()
+          ? user.validTill
+          : new Date();
+      const newValidTill = new Date(
+        baseDate.getTime() + 35 * 24 * 60 * 60 * 1000
+      );
+      user.validTill = newValidTill;
+      await user.save();
+
+      logger.info(
+        `Admin's validTill updated to ${newValidTill} for userId: ${userId}`
+      );
+
       logger.info(`PIN generated and saved successfully for userId: ${userId}`);
       return res.status(StatusCodes.OK).json({
         message: "PIN generated and saved successfully",
@@ -257,6 +272,17 @@ class PinController {
 
       logger.info(
         `Pin transferred successfully from ${pinRecord.generatedBy} to ${userId}`
+      );
+
+      const baseDate = user.validTill || new Date();
+      const newValidTill = new Date(
+        baseDate.getTime() + 35 * 24 * 60 * 60 * 1000
+      );
+      user.validTill = newValidTill;
+      await user.save();
+
+      logger.info(
+        `User's validTill updated to ${newValidTill} for userId: ${userId}`
       );
 
       // Step 6: Return success response

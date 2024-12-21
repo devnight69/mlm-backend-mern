@@ -104,6 +104,23 @@ class AuthController {
       const referrer = await User.findOne({ referralCode });
       if (!referrer) throw new Error("Invalid referral code");
 
+      const isValid = user.validTill && user.validTill > new Date();
+
+      if (!isValid) {
+        logger.error(
+          `User validity expired. ValidTill: ${
+            user.validTill
+          }, CurrentTime: ${new Date()}`
+        );
+        throw new Error("User Validity Expired");
+      }
+
+      logger.info(
+        `User is valid. ValidTill: ${
+          user.validTill
+        }, CurrentTime: ${new Date()}`
+      );
+
       let pinDetails;
 
       const query = { pinCode: pin };
@@ -114,7 +131,7 @@ class AuthController {
       pinDetails = await PinManagement.findOne(query);
 
       // Validate pin
-      
+
       if (!pinDetails || pinDetails.status === "used") {
         throw new Error("Invalid or used pin");
       }
@@ -128,6 +145,9 @@ class AuthController {
       // Determine referral parent
       const referralParent = await this.getReferralParent(referrer);
 
+      const validTill = new Date();
+      validTill.setDate(validTill.getDate() + 35); // Add 35 days to the current date
+
       // Create the new user
       const newUser = new User({
         name,
@@ -136,6 +156,7 @@ class AuthController {
         password: hashedPassword,
         referralCode: mobileNumber,
         parentReferralCode: referralParent._id,
+        validTill: validTill,
         status: "active",
       });
 
@@ -328,7 +349,7 @@ class AuthController {
     const packageIncome = levelIncomeMap[productPrice] || {};
     income =
       (packageIncome[updatedLevel] || packageIncome.default) +
-      packageDetails.directIncome;
+      packageDetails.directIncome + packageDetails.cashback;
 
     if (referrerId !== referral._id) {
       indirectIncome =
@@ -376,11 +397,11 @@ class AuthController {
       }),
     ]);
 
-    console.log(`${directReferrals} directReferrals`);
-    console.log(`${indirectReferrals} indirectReferrals`);
+    logger.info(`${directReferrals} directReferrals`);
+    logger.info(`${indirectReferrals} indirectReferrals`);
 
     const totalCount = directReferrals + indirectReferrals;
-    console.log(`${totalCount} totalCount`);
+    logger.info(`${totalCount} totalCount`);
 
     // Determine the level based on the thresholds
     if (totalCount >= 9765625) return 10;

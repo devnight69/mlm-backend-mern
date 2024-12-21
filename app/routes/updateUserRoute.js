@@ -33,9 +33,15 @@ router.get("/:referralCode/users", authMiddleware, async (req, res) => {
   return res.status(response.status).json(response);
 });
 
-router.get('/wallet/:userId',authMiddleware, async(req, res) => {
-  const {userId} = req.params;
+router.get("/wallet/:userId", authMiddleware, async (req, res) => {
+  const { userId } = req.params;
   const response = await UpdateUserService.getWalletDetailsByUserId(userId);
+  return res.status(response.status).json(response);
+});
+
+router.get("/total-count/:userId", authMiddleware, async (req, res) => {
+  const { userId } = req.params;
+  const response = await UpdateUserService.getTotalReferralCount(userId);
   return res.status(response.status).json(response);
 });
 
