@@ -123,6 +123,8 @@ class PackageController {
         productName: pkg.productName,
         productPrice: pkg.productPrice,
         directIncome: `₹${pkg.directIncome.toFixed(2)}`,
+        type: pkg.type,
+        cashback: `₹${pkg.cashback.toFixed(2)}`,
       }));
 
       return res

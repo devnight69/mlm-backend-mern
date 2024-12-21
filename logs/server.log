@@ -78,3 +78,15 @@
 2024-12-21 12:12:27 [INFO]: Received request to create a package.
 2024-12-21 12:12:27 [WARN]: Validation error during package creation: "type" is not allowed
 2024-12-21 12:12:27 [INFO]: ::1 - - [21/Dec/2024:06:42:27 +0000] "POST /api/packages/create/package HTTP/1.1" 400 106 "-" "PostmanRuntime/7.43.0"
+2024-12-21 12:13:55 [INFO]: Received request to create a package.
+2024-12-21 12:13:55 [INFO]: Creating a new package.
+2024-12-21 12:13:55 [INFO]: Package created successfully: 676663abb0d620777e79b69f
+2024-12-21 12:13:55 [INFO]: ::1 - - [21/Dec/2024:06:43:55 +0000] "POST /api/packages/create/package HTTP/1.1" 201 283 "-" "PostmanRuntime/7.43.0"
+2024-12-21 12:16:01 [INFO]: Received request to create a package.
+2024-12-21 12:16:01 [INFO]: Creating a new package.
+2024-12-21 12:16:01 [ERROR]: Error during package creation: PackageModel validation failed: cashback: Cast to Number failed for value "NaN" (type number) at path "cashback"
+2024-12-21 12:16:01 [INFO]: ::1 - - [21/Dec/2024:06:46:01 +0000] "POST /api/packages/create/package HTTP/1.1" 500 104 "-" "PostmanRuntime/7.43.0"
+2024-12-21 12:16:54 [INFO]: Received request to create a package.
+2024-12-21 12:16:54 [INFO]: Creating a new package.
+2024-12-21 12:16:54 [ERROR]: Error during package creation: PackageModel validation failed: cashback: Cast to Number failed for value "NaN" (type number) at path "cashback"
+2024-12-21 12:16:54 [INFO]: ::1 - - [21/Dec/2024:06:46:54 +0000] "POST /api/packages/create/package HTTP/1.1" 500 104 "-" "PostmanRuntime/7.43.0"
