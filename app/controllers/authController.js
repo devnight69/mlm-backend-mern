@@ -104,12 +104,12 @@ class AuthController {
       const referrer = await User.findOne({ referralCode });
       if (!referrer) throw new Error("Invalid referral code");
 
-      const isValid = user.validTill && user.validTill > new Date();
+      const isValid = referrer.validTill && referrer.validTill > new Date();
 
       if (!isValid) {
         logger.error(
           `User validity expired. ValidTill: ${
-            user.validTill
+            referrer.validTill
           }, CurrentTime: ${new Date()}`
         );
         throw new Error("User Validity Expired");
@@ -117,7 +117,7 @@ class AuthController {
 
       logger.info(
         `User is valid. ValidTill: ${
-          user.validTill
+          referrer.validTill
         }, CurrentTime: ${new Date()}`
       );
 
@@ -155,7 +155,7 @@ class AuthController {
         email,
         password: hashedPassword,
         referralCode: mobileNumber,
-        parentReferralCode: referralParent._id,
+        parentReferralCode: referralParent.referralCode,
         validTill: validTill,
         status: "active",
       });
@@ -349,7 +349,8 @@ class AuthController {
     const packageIncome = levelIncomeMap[productPrice] || {};
     income =
       (packageIncome[updatedLevel] || packageIncome.default) +
-      packageDetails.directIncome + packageDetails.cashback;
+      packageDetails.directIncome +
+      packageDetails.cashback;
 
     if (referrerId !== referral._id) {
       indirectIncome =
